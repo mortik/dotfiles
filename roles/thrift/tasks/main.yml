@@ -1,9 +1,0 @@
----
-  - block:
-
-      - name: install thrift
-        homebrew:
-          name: thrift
-          state: latest
-
-    when: ansible_os_family == 'Darwin'

@@ -6,7 +6,7 @@ alias ..='cd ..'
 
 alias go-run='go run !(*_test).go'
 
-alias update='brew update --preinstall && brew upgrade && brew cleanup'
+alias update='brew update --auto-update && brew upgrade && brew cleanup'
 
 alias remove-all-gems='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 
@@ -27,6 +27,7 @@ alias docker-clean='docker-clean-c || true && docker-clean-i'
 
 alias edit-hosts='$EDITOR /etc/hosts'
 alias edit-dots='$EDITOR $HOME/.dotfiles'
+alias edit-aliases='$EDITOR $HOME/.zshrc.d/alias.zsh'
 
 alias run='forego start'
 alias run-dev='forego start -f Procfile.dev'
@@ -36,10 +37,18 @@ alias check-port='sudo lsof -i :'
 
 alias be='bundle exec'
 
+function edit-rails-credentials () {
+  if [ -z "$1" ]; then
+    EDITOR="code --wait" bin/rails credentials:edit
+  else
+    EDITOR="code --wait" bin/rails credentials:edit --environment=$1
+  fi
+}
+
 alias tmux-kill-all="tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill"
 
-alias utube-audio='youtube-dl -x --audio-format mp3'
-alias utube='youtube-dl -f mp4'
+alias utube-audio='yt-dlp -x --audio-format mp3'
+alias utube='yt-dlp --cookies-from-browser chrome'
 
 alias aws-login='eval $(aws ecr get-login)'
 function s3-sync () {
@@ -107,3 +116,7 @@ function jass-decrypt () {
 
 alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
 alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
+
+function enhance() {
+  docker run --rm -v "$(pwd)/`dirname ${@:$#}`":/ne/input -it alexjc/neural-enhance ${@:1:$#-1} "input/`basename ${@:$#}`";
+}

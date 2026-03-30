@@ -1,0 +1,19 @@
+---
+- block:
+
+    - name: install mise
+      homebrew:
+        name: mise
+        state: latest
+
+    - name: create mise config directory
+      file:
+        path: "{{ ansible_env.HOME }}/.config/mise"
+        state: directory
+
+    - name: setup mise config
+      copy:
+        src: "config.toml"
+        dest: "{{ ansible_env.HOME }}/.config/mise/config.toml"
+
+  when: ansible_os_family == 'Darwin'

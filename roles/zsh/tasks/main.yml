@@ -47,3 +47,12 @@
     - ansible.zsh
     - android.zsh
     - alias.zsh
+    - elixir.zsh
+    - go.zsh
+    - mise.zsh
+
+- name: copy personal zshrc.d files
+  copy:
+    src: "personal.zsh"
+    dest: "{{ ansible_env.HOME }}/.zshrc.d/personal.zsh"
+  when: personal_mac | default(false)

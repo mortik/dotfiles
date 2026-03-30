@@ -5,17 +5,48 @@ fi
 cdpath=({{ zsh_cdpath }})
 
 # Modify PATH
-export PATH=/bin:$HOME/bin:{{ homebrew_path }}/bin:/usr/local/sbin:$PATH
-export PATH=$PATH:$HOME/Applications/bin
+export PATH=$HOME/bin:{{ homebrew_path }}/bin:$PATH
+export PATH=$HOME/.local/share/mise/shims:$PATH
+export PATH=$HOME/Applications/bin:$PATH
 export PATH=$PATH:{{ homebrew_path }}/go/bin
+export PATH=$PATH:{{ homebrew_path }}/sbin
 export PATH=./bin:$PATH
 export PATH=./node_modules/.bin:$PATH
 export PATH=$PATH:$HOME/.composer/vendor/bin
+export PATH="{{ homebrew_path }}/opt/openssl@3/bin:$PATH"
+export PATH="{{ homebrew_path }}/opt/postgresql@16/bin:$PATH"
+export PATH="{{ homebrew_path }}/opt/libiconv/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export PGGSSENCMODE="disable" # temporary fix for postgresql 14.8 and pg gem
+
+export DOTNET_ROOT="{{ homebrew_path }}/opt/dotnet/libexec"
 
 export ZPLUG_HOME={{ homebrew_path }}/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
-zplug "lib/*", from:oh-my-zsh
+# zplug "lib/*", from:oh-my-zsh currently not possible due to issues in vcs_info lib
+zplug "lib/bzr", from:oh-my-zsh
+zplug "lib/completion", from:oh-my-zsh
+zplug "lib/functions", from:oh-my-zsh
+zplug "lib/key-bindings", from:oh-my-zsh
+zplug "lib/spectrum", from:oh-my-zsh
+zplug "lib/cli", from:oh-my-zsh
+zplug "lib/correction", from:oh-my-zsh
+zplug "lib/git", from:oh-my-zsh
+zplug "lib/misc", from:oh-my-zsh
+zplug "lib/termsupport", from:oh-my-zsh
+zplug "lib/clipboard", from:oh-my-zsh
+zplug "lib/diagnostics", from:oh-my-zsh
+zplug "lib/grep", from:oh-my-zsh
+zplug "lib/nvm", from:oh-my-zsh
+zplug "lib/theme-and-appearance", from:oh-my-zsh
+zplug "lib/compfix", from:oh-my-zsh
+zplug "lib/directories", from:oh-my-zsh
+zplug "lib/history", from:oh-my-zsh
+zplug "lib/prompt_info_functions", from:oh-my-zsh
+
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 
 if ! zplug check --verbose; then
@@ -35,6 +66,8 @@ else
   export EDITOR='{{ editor }}'
 fi
 
+autoload -Uz compinit && compinit
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -49,3 +82,11 @@ done
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

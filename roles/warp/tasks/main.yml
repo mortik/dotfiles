@@ -1,0 +1,30 @@
+---
+- block:
+
+    - name: install warp
+      homebrew_cask:
+        name: warp
+        state: latest
+        accept_external_apps: True
+
+    - name: create warp themes directory
+      file:
+        path: "{{ ansible_env.HOME }}/.warp/themes"
+        state: directory
+
+    - name: copy warp theme
+      copy:
+        src: "SC-Connie.yaml"
+        dest: "{{ ansible_env.HOME }}/.warp/themes/SC-Connie.yaml"
+
+    - name: copy warp theme background
+      copy:
+        src: "SC-Connie.jpg"
+        dest: "{{ ansible_env.HOME }}/.warp/themes/SC-Connie.jpg"
+
+    - name: copy warp keybindings
+      copy:
+        src: "keybindings.yaml"
+        dest: "{{ ansible_env.HOME }}/.warp/keybindings.yaml"
+
+  when: ansible_os_family == 'Darwin'

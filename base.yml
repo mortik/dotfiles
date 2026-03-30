@@ -10,7 +10,6 @@
     - { role: brew, tags: brew, when: "ansible_os_family == 'Darwin'" }
     - { role: cask, tags: cask, when: "ansible_os_family == 'Darwin'" }
     #- { role: mas, tags: mas, when: "ansible_os_family == 'Darwin'" }
-    - { role: git-radar, tags: git-radar }
     - { role: zsh, tags: shell, when: "shell == 'zsh'" }
     - { role: bash, tags: shell, when: "shell == 'bash'" }
     - { role: bash_aliases, tags: shell, when: "shell == 'bash'" }
@@ -24,14 +23,11 @@
     # - { role: insomnia, tags: insomnia }
     - { role: awscli, tags: awscli }
     # - { role: google-chrome, tags: google-chrome }
-    # - { role: dropbox, tags: dropbox }
     - { role: zoom, tags: zoom }
     - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     # - { role: vlc, tags: vlc }
-    - { role: asdf, tags: asdf }
-    # - { role: rbenv, tags: rbenv }
-    # - { role: nvm, tags: nvm }
+    - { role: mise, tags: mise }
     - { role: yarn, tags: yarn }
     # - { role: go, tags: go }
     # - { role: elixir, tags: elixir }
@@ -48,4 +44,5 @@
     - { role: hostname, tags: hostname }
     - { role: forego, tags: forego }
     - { role: kubernetes, tags: kubernetes }
-    - { role: thrift, tags: thrift }
+    - { role: warp, tags: warp }
+    - { role: claude-code, tags: claude-code }

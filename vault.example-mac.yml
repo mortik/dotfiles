@@ -14,6 +14,9 @@ homebrew_path: /opt/homebrew
 shell: zsh
 gpg_default_key_id: ""
 editor: "code"
+personal_mac: true
+git_include_configs:
+  - { gitdir: "~/dev/work/", path: "~/dev/work/.gitconfig" }
 mas_apps:
   - { id: 497799835, name: "Xcode" }
   - { id: 409203825, name: "Numbers" }
@@ -41,32 +44,45 @@ vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
 vscode_circleci_api_key: ""
 brew_apps:
-  - hh
-  - mas
-  - heroku
+  - actionlint
+  - age
   - awscli
-  - bash-completion
+  - crowdin
+  - dotnet
+  - elixir
+  - ffmpeg
+  - flyctl
+  - gh
+  - ghostscript
+  - git-lfs
+  - gnu-sed
+  - go
+  - hcloud
+  - hivemind
   - hub
-  - kubectx
-  - helm
-  - kubernetes-cli
-  - rancher-cli
+  - lazygit
+  - mas
+  - mise
+  - s3cmd
+  - terminal-notifier
+  - vips
+  - yt-dlp
 brew_start_services: False
 cask_apps:
-  - dash
   - 1password
   - 1password-cli
-  - colorsnapper
-  - slack
-  - iterm2
   - alfred
+  - claude-code
+  - colorsnapper
   - flux
+  - font-hack-nerd-font
   - gpg-suite
   - imageoptim
-  - sketch
-  - moneymoney
-  - viscosity
-  - mountain
-  - tableplus
-  - fantastical
+  - ngrok
   - postman
+  - sketch
+  - slack
+  - tableplus
+  - warp
+  - superset
+  - wkhtmltopdf

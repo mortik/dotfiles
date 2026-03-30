@@ -44,3 +44,26 @@
   become: yes
   become_method: sudo
   when: ansible_distribution == 'Ubuntu'
+
+- block:
+
+    - name: install hstr
+      homebrew:
+        name: hstr
+        state: latest
+
+    - name: make sure zshrc.d folder is present
+      file:
+        path: "{{ ansible_env.HOME }}/.zshrc.d"
+        state: directory
+      when: shell == 'zsh'
+      tags: shell
+
+    - name: setup zsh config
+      copy:
+        src: "hh.zsh"
+        dest: "{{ ansible_env.HOME }}/.zshrc.d/hh.zsh"
+      when: shell == 'zsh'
+      tags: shell
+
+  when: ansible_os_family == 'Darwin'

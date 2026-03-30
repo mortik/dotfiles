@@ -11,9 +11,9 @@
           name: rancher-cli
           state: latest
 
-      - name: install kubernetes-helm
+      - name: install helm
         homebrew:
-          name: kubernetes-helm
+          name: helm
           state: latest
 
       - name: install kubectx
