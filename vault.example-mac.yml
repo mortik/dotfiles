@@ -73,12 +73,14 @@ cask_apps:
   - 1password
   - 1password-cli
   - alfred
+  - ccmenu
   - claude-code
   - colorsnapper
   - flux
   - font-hack-nerd-font
   - imageoptim
   - ngrok
+  - orbstack
   - postman
   - sketch
   - slack
