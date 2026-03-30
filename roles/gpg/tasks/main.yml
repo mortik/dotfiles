@@ -16,8 +16,7 @@
     name: gpg-suite
     state: present
     accept_external_apps: True
-  become: yes
-  become_method: sudo
+    sudo_password: "{{ ansible_become_pass | default('') }}"
   when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install gnupg

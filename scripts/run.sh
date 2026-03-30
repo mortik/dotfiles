@@ -15,7 +15,10 @@ if [ -n "${tag_names}" ]; then
   tags="-t $tag_names"
 fi
 
-ansible-playbook base.yml -i hosts -e @vault.yml --ask-become-pass $tags
+read -s -p "BECOME password: " BECOME_PASS
+echo
+
+ansible-playbook base.yml -i hosts -e @vault.yml -e "ansible_become_pass=${BECOME_PASS}" $tags
 
 echo
 echo "Provisioning Finished!"
