@@ -84,4 +84,4 @@ cask_apps:
   - tableplus
   - warp
   - superset
-  - wkhtmltopdf
+
