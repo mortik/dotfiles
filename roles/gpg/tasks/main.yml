@@ -11,6 +11,15 @@
     state: latest
   when: ansible_facts['os_family'] == 'Darwin'
 
+- name: install gpg-suite
+  homebrew_cask:
+    name: gpg-suite
+    state: present
+    accept_external_apps: True
+  become: yes
+  become_method: sudo
+  when: ansible_facts['os_family'] == 'Darwin'
+
 - name: install gnupg
   pacman:
     name: gnupg

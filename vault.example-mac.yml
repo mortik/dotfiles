@@ -76,7 +76,6 @@ cask_apps:
   - colorsnapper
   - flux
   - font-hack-nerd-font
-  - gpg-suite
   - imageoptim
   - ngrok
   - postman

@@ -13,4 +13,3 @@
     name: "{{ cask_apps }}"
     state: present
     accept_external_apps: True
-    sudo_password: "{{ ansible_become_pass | default('') }}"
