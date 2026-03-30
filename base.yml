@@ -48,7 +48,7 @@
     - { role: terraform, tags: terraform }
     - { role: docker, tags: docker }
     - { role: shellcheck, tags: shellcheck }
-    - { role: youtube-dl, tags: youtube-dl }
+    # - { role: youtube-dl, tags: youtube-dl }
     # - { role: vhosts, tags: vhosts }
     - { role: wallpaper, tags: wallpaper }
     - { role: hostname, tags: hostname }
