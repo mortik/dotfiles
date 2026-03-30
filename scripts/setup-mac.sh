@@ -13,9 +13,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 which -s brew
 if [[ $? != 0 ]] ; then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-    brew update --all && brew upgrade && brew cleanup
+    brew update && brew upgrade && brew cleanup
 fi
 
 brew install ansible
