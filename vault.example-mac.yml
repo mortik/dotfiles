@@ -15,6 +15,7 @@ shell: zsh
 gpg_default_key_id: ""
 editor: "code"
 personal_mac: true
+wallpaper: construction
 git_include_configs:
   - { gitdir: "~/dev/work/", path: "~/dev/work/.gitconfig" }
 mas_apps:

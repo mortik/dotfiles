@@ -28,4 +28,18 @@
         src: "keybindings.yaml"
         dest: "{{ ansible_facts['env']['HOME'] }}/.warp/keybindings.yaml"
 
+    - name: set warp app icon
+      community.general.osx_defaults:
+        domain: dev.warp.Warp-Stable
+        key: AppIcon
+        type: string
+        value: '"Original"'
+
+    - name: set warp theme
+      community.general.osx_defaults:
+        domain: dev.warp.Warp-Stable
+        key: Theme
+        type: string
+        value: '{"Custom":{"name":"SC-Connie","path":"{{ ansible_facts["env"]["HOME"] }}/.warp/themes/SC-Connie.yaml"}}'
+
   when: ansible_facts['os_family'] == 'Darwin'
