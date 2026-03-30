@@ -4,8 +4,9 @@
     - name: install warp
       homebrew_cask:
         name: warp
-        state: latest
+        state: present
         accept_external_apps: True
+        sudo_password: "{{ ansible_become_pass | default('') }}"
 
     - name: create warp themes directory
       file:
