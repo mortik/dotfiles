@@ -34,7 +34,7 @@
     - { role: awscli, tags: awscli }
     # - { role: google-chrome, tags: google-chrome }
     - { role: zoom, tags: zoom }
-    - { role: skype, tags: skype }
+    # - { role: skype, tags: skype }
     - { role: spotify, tags: spotify }
     # - { role: vlc, tags: vlc }
     - { role: mise, tags: mise }
