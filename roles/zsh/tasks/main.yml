@@ -36,6 +36,8 @@
 
     - name: set shell for user
       command: "chsh -s {{ homebrew_path }}/bin/zsh"
+      become: yes
+      become_method: sudo
 
   when: ansible_facts['os_family'] == 'Darwin'
 
