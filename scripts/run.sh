@@ -2,6 +2,8 @@
 
 set -eu
 
+export PATH="/opt/homebrew/bin:$PATH"
+
 echo
 echo "Starting Provisioning..."
 echo
