@@ -40,7 +40,7 @@
     - name: update yaourt
       command: yaourt -Syua --noconfirm
 
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
@@ -89,7 +89,7 @@
 
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: set interface settings
   command: "gsettings set org.gnome.desktop.interface {{ item.key }} {{ item.value }}"
@@ -131,16 +131,16 @@
 - name: setup terminal-profile script
   copy:
     src: terminal-profile.sh
-    dest: "{{ ansible_env.HOME }}/.terminal-profile.sh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.terminal-profile.sh"
     mode: u+rwx
   tags: terminal-profile
 
 - name: add profile
   copy:
     src: profile.conf
-    dest: "{{ ansible_env.HOME }}/.profile.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.profile.conf"
   tags: terminal-profile
 
 - name: import profile
-  command: "{{ ansible_env.HOME }}/.terminal-profile.sh import {{ ansible_env.HOME }}/.profile.conf"
+  command: "{{ ansible_facts['env']['HOME'] }}/.terminal-profile.sh import {{ ansible_facts['env']['HOME'] }}/.profile.conf"
   tags: terminal-profile

@@ -1,7 +1,7 @@
 ---
 - name: set dark menu bar
   command: osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to yes'
-  when: ansible_distribution_version is version_compare('10.14', '>')
+  when: ansible_facts['distribution_version'] is version_compare('10.14', '>')
 
 - name: set dock size
   command: defaults write com.apple.dock tilesize -int 40

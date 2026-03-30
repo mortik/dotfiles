@@ -1,29 +1,29 @@
 ---
 - name: create config dir
   file:
-    path: "{{ ansible_env.HOME }}/.config/nvim"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim"
     state: directory
 
 - name: copy initial config
   copy:
     src: init.vim
-    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/init.vim"
 
 - name: create autoload dir
   file:
-    path: "{{ ansible_env.HOME }}/.config/nvim/autoload"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/autoload"
     state: directory
 
 - name: install vim-plug
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    dest: "{{ ansible_env.HOME }}/.config/nvim/autoload/plug.vim"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/autoload/plug.vim"
 
 - name: install neovim
   homebrew:
     name: neovim/neovim/neovim
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install neovim
   pacman:
@@ -32,7 +32,7 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install neovim
   apt:
@@ -41,18 +41,18 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
   when: shell == 'bash'
   tags: shell
 
 - name: make sure zshrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
   when: shell == 'zsh'
   tags: shell
@@ -60,13 +60,13 @@
 - name: setup bash config
   copy:
     src: "neovim.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/neovim.bash"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/neovim.bash"
   when: shell == 'bash'
   tags: shell
 
 - name: setup zsh config
   copy:
     src: "neovim.zsh"
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/neovim.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/neovim.zsh"
   when: shell == 'zsh'
   tags: shell

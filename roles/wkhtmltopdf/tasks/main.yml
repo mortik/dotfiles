@@ -4,7 +4,7 @@
     name: wkhtmltopdf
     state: latest
     accept_external_apps: True
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install wkhtmltopdf
   pacman:
@@ -13,7 +13,7 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install wkhtmltopdf
   apt:
@@ -22,4 +22,4 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

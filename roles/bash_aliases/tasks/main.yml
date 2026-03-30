@@ -1,26 +1,26 @@
 ---
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
 
 - name: create bashrc.d/aliases folder
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d/aliases"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/aliases"
     state: directory
 
 - name: copy aliases
   copy:
     src: "{{ item }}.mac.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/aliases/{{ item }}.bash"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/aliases/{{ item }}.bash"
   with_items:
     - main
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: copy aliases
   copy:
     src: "{{ item }}.linux.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/aliases/{{ item }}.bash"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/aliases/{{ item }}.bash"
   with_items:
     - main
-  when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Ubuntu'
+  when: ansible_facts['os_family'] == 'Archlinux' or ansible_facts['distribution'] == 'Ubuntu'

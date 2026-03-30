@@ -3,13 +3,13 @@
   homebrew:
     name: gnupg
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install pinentry
   homebrew:
     name: pinentry-mac
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install gnupg
   pacman:
@@ -18,7 +18,7 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install gnupg
   apt:
@@ -27,33 +27,33 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup gpg dir
   file:
-    path: "{{ ansible_env.HOME }}/.gnupg"
+    path: "{{ ansible_facts['env']['HOME'] }}/.gnupg"
     state: directory
 
 - name: setup gpg conf
   template:
     src: gpg.conf.j2
-    dest: "{{ ansible_env.HOME }}/.gnupg/gpg.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/gpg.conf"
 
 - name: setup gpg agent conf
   copy:
     src: gpg-agent.conf
-    dest: "{{ ansible_env.HOME }}/.gnupg/gpg-agent.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/gpg-agent.conf"
 
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
   when: shell == 'bash'
   tags: shell
 
 - name: make sure zshrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
   when: shell == 'zsh'
   tags: shell
@@ -61,13 +61,13 @@
 - name: setup gnupg bash
   copy:
     src: gnupg.bash
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/gnupg.bash"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/gnupg.bash"
   when: shell == 'bash'
   tags: shell
 
 - name: setup gnupg zsh
   copy:
     src: gnupg.zsh
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/gnupg.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/gnupg.zsh"
   when: shell == 'zsh'
   tags: shell

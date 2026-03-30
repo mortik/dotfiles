@@ -1,7 +1,7 @@
 ---
 - name: create zshrc.d folder
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
 
 - block:
@@ -27,22 +27,22 @@
     - name: setup zshrc
       template:
         src: "zshrc.j2"
-        dest: "{{ ansible_env.HOME }}/.zshrc"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc"
 
     - name: setup p10k.zsh
       copy:
         src: "p10k.zsh"
-        dest: "{{ ansible_env.HOME }}/.p10k.zsh"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.p10k.zsh"
 
     - name: set shell for user
       command: "chsh -s {{ homebrew_path }}/bin/zsh"
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: copy zshrc.d files
   copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/{{ item }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/{{ item }}"
   with_items:
     - ansible.zsh
     - android.zsh
@@ -54,5 +54,5 @@
 - name: copy personal zshrc.d files
   copy:
     src: "personal.zsh"
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/personal.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/personal.zsh"
   when: personal_mac | default(false)

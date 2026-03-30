@@ -15,4 +15,4 @@
 
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'

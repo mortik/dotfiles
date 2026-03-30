@@ -3,7 +3,7 @@
   homebrew:
     name: postgres
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - block:
 
@@ -55,7 +55,7 @@
       become: yes
       become_method: sudo
 
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 
 - block:
@@ -80,4 +80,4 @@
 
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

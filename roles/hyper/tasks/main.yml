@@ -4,7 +4,7 @@
     name: hyper
     state: latest
     accept_external_apps: True
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install hyper
   apt:
@@ -13,9 +13,9 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup config
   copy:
     src: hyper.js
-    dest: "{{ ansible_env.HOME }}/.hyper.js"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.hyper.js"

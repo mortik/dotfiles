@@ -2,14 +2,14 @@
 
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
   when: shell == 'bash'
   tags: shell
 
 - name: make sure zshrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
   when: shell == 'zsh'
   tags: shell
@@ -24,18 +24,18 @@
     - name: setup bash config
       copy:
         src: rbenv.mac.bash
-        dest: "{{ ansible_env.HOME }}/.bashrc.d/rbenv.bash"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/rbenv.bash"
       when: shell == 'bash'
       tags: shell
 
     - name: setup bash config
       copy:
         src: rbenv.mac.zsh
-        dest: "{{ ansible_env.HOME }}/.zshrc.d/rbenv.zsh"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/rbenv.zsh"
       when: shell == 'zsh'
       tags: shell
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - block:
 
@@ -45,33 +45,33 @@
     - name: install ruby-build
       command: yaourt -S ruby-build --noconfirm
 
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
     - name: install rbenv
       git:
         repo: https://github.com/rbenv/rbenv
-        dest: "{{ ansible_env.HOME }}/.rbenv"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.rbenv"
         update: true
         force: true
 
     - name: create plugin dir
       file:
-        path: "{{ ansible_env.HOME }}/.rbenv/plugins"
+        path: "{{ ansible_facts['env']['HOME'] }}/.rbenv/plugins"
         state: directory
 
     - name: install ruby-build
       git:
         repo: https://github.com/sstephenson/ruby-build
-        dest: "{{ ansible_env.HOME }}/.rbenv/plugins/ruby-build"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.rbenv/plugins/ruby-build"
         update: true
         force: true
 
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup bash config
   copy:
     src: rbenv.linux.bash
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/rbenv.bash"
-  when: ansible_distribution == 'Ubuntu' or ansible_os_family == 'Archlinux'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/rbenv.bash"
+  when: ansible_facts['distribution'] == 'Ubuntu' or ansible_facts['os_family'] == 'Archlinux'

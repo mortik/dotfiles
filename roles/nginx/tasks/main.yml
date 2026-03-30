@@ -3,7 +3,7 @@
   homebrew:
     name: nginx
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install nginx
   pacman:
@@ -12,7 +12,7 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
@@ -28,6 +28,6 @@
         state: latest
         update_cache: yes
 
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
   become: yes
   become_method: sudo

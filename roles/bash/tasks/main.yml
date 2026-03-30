@@ -1,7 +1,7 @@
 ---
 - name: create bashrc.d folder
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
 
 - block:
@@ -23,17 +23,17 @@
     - name: setup bashrc
       template:
         src: "bashrc.mac.bash"
-        dest: "{{ ansible_env.HOME }}/.bashrc"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
 
     - name: setup bash_profile
       copy:
         src: bash_profile.mac.bash
-        dest: "{{ ansible_env.HOME }}/.bash_profile"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bash_profile"
 
     - name: setup bash completion
       copy:
         src: "bash_completion.mac.bash"
-        dest: "{{ ansible_env.HOME }}/.bashrc.d/bash_completion.bash"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/bash_completion.bash"
 
     - name: add brew bash to shells
       command: "echo {{ homebrew_path }}/bin/bash >> /etc/shells"
@@ -43,7 +43,7 @@
     - name: set shell for user
       command: "chsh -s {{ homebrew_path }}/bin/bash"
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install bash
   pacman:
@@ -52,7 +52,7 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install bash
   apt:
@@ -61,24 +61,24 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup bashrc
   template:
     src: "bashrc.linux.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc"
-  when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Ubuntu'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
+  when: ansible_facts['os_family'] == 'Archlinux' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup bash completion
   copy:
     src: "bash_completion.linux.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/bash_completion.bash"
-  when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Ubuntu'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/bash_completion.bash"
+  when: ansible_facts['os_family'] == 'Archlinux' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: copy bashrc.d files
   copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/{{ item }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/{{ item }}"
   with_items:
     - ansible.bash
     - prompt.bash

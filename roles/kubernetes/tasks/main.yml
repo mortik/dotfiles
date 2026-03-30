@@ -21,4 +21,4 @@
           name: kubectx
           state: latest
 
-    when: ansible_os_family == 'Darwin'
+    when: ansible_facts['os_family'] == 'Darwin'

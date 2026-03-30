@@ -3,7 +3,7 @@
   homebrew:
     name: go
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install go
   pacman:
@@ -12,7 +12,7 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install go
   apt:
@@ -21,18 +21,18 @@
     state: latest
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
   when: shell == 'bash'
   tags: shell
 
 - name: make sure zshrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
   when: shell == 'zsh'
   tags: shell
@@ -40,13 +40,13 @@
 - name: setup bash config
   copy:
     src: "go.bash"
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/go.bash"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/go.bash"
   when: shell == 'bash'
   tags: shell
 
 - name: setup bash config
   copy:
     src: "go.zsh"
-    dest: "{{ ansible_env.HOME }}/.zshrc.d/go.zsh"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/go.zsh"
   when: shell == 'zsh'
   tags: shell

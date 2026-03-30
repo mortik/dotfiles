@@ -3,7 +3,7 @@
   homebrew:
     name: forego
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - unarchive:
     src: https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-darwin-amd64.zip
@@ -12,4 +12,4 @@
     creates: "{{ homebrew_path }}/bin/forego"
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu' or ansible_os_family == 'Archlinux'
+  when: ansible_facts['distribution'] == 'Ubuntu' or ansible_facts['os_family'] == 'Archlinux'

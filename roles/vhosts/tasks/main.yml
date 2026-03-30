@@ -29,7 +29,7 @@
       notify:
         - restart nginx homebrew
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - block:
 
@@ -67,7 +67,7 @@
       notify:
         - restart nginx systemctl
 
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
@@ -119,7 +119,7 @@
       notify:
         - restart nginx
 
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: Add mappings to /etc/hosts
   blockinfile:

@@ -1,14 +1,14 @@
 ---
 - name: make sure bashrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.bashrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
     state: directory
   when: shell == 'bash'
   tags: shell
 
 - name: make sure zshrc.d folder is present
   file:
-    path: "{{ ansible_env.HOME }}/.zshrc.d"
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
     state: directory
   when: shell == 'zsh'
   tags: shell
@@ -27,22 +27,22 @@
     - name: setup bash configs
       copy:
         src: nvm.bash
-        dest: "{{ ansible_env.HOME }}/.bashrc.d/nvm.bash"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/nvm.bash"
       when: shell == 'bash'
       tags: shell
 
     - name: setup zsh configs
       copy:
         src: nvm.zsh
-        dest: "{{ ansible_env.HOME }}/.zshrc.d/nvm.zsh"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/nvm.zsh"
       when: shell == 'zsh'
       tags: shell
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install nvm
   command: yaourt -S nvm --noconfirm
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
@@ -55,10 +55,10 @@
     - name: install nvm
       command: /tmp/nvm-install.sh
 
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: setup bash configs
   copy:
     src: nvm.bash
-    dest: "{{ ansible_env.HOME }}/.bashrc.d/nvm.bash"
-  when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Ubuntu'
+    dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/nvm.bash"
+  when: ansible_facts['os_family'] == 'Archlinux' or ansible_facts['distribution'] == 'Ubuntu'

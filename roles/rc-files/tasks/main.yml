@@ -2,7 +2,7 @@
 - name: copy rc files
   copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/{{ item }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/{{ item }}"
   with_items:
     - .gemrc
     - .vimrc

@@ -10,34 +10,34 @@
 
     - name: Setup Dir
       file:
-        dest: "{{ ansible_env.HOME }}/Library/Application Support/Code/User"
+        dest: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Code/User"
         state: directory
 
     - name: Setup Files
       copy:
         src: "{{ item }}"
-        dest: "{{ ansible_env.HOME }}/Library/Application Support/Code/User/{{ item }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Code/User/{{ item }}"
       with_items:
         - keybindings.json
 
     - name: setup Settings
       template:
         src: "settings.json.j2"
-        dest: "{{ ansible_env.HOME }}/Library/Application Support/Code/User/settings.json"
+        dest: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Code/User/settings.json"
 
     - name: setup Projects
       template:
         src: "projects.json.j2"
-        dest: "{{ ansible_env.HOME }}/Library/Application Support/Code/User/projects.json"
+        dest: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Code/User/projects.json"
       tags: vscode-projects
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - block:
 
     - name: install visual-studio-code
       command: yaourt -S visual-studio-code-bin --noconfirm
-      when: ansible_os_family == 'Archlinux'
+      when: ansible_facts['os_family'] == 'Archlinux'
 
     - name: install visual-studio-code
       apt:
@@ -46,25 +46,25 @@
         update_cache: yes
       become: yes
       become_method: sudo
-      when: ansible_distribution == 'Ubuntu'
+      when: ansible_facts['distribution'] == 'Ubuntu'
 
     - name: setup config dir
       file:
-        path: "{{ ansible_env.HOME }}/.config/Code/User"
+        path: "{{ ansible_facts['env']['HOME'] }}/.config/Code/User"
         state: directory
 
     - name: setup Settings
       template:
         src: "settings.json.j2"
-        dest: "{{ ansible_env.HOME }}/.config/Code/User/settings.json"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.config/Code/User/settings.json"
 
     - name: setup Projects
       template:
         src: "projects.json.j2"
-        dest: "{{ ansible_env.HOME }}/.config/Code/User/projects.json"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.config/Code/User/projects.json"
       tags: vscode-projects
 
-  when: ansible_os_family == 'Archlinux' or ansible_distribution == 'Ubuntu'
+  when: ansible_facts['os_family'] == 'Archlinux' or ansible_facts['distribution'] == 'Ubuntu'
 
 - name: install extensions
   command: "code --install-extension {{ item }}"

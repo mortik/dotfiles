@@ -4,11 +4,11 @@
     name: skype
     state: latest
     accept_external_apps: True
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install skype
   command: yaourt -S skypeforlinux-stable-bin --noconfirm
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install skype
   apt:
@@ -17,4 +17,4 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

@@ -4,4 +4,4 @@
     name: guake
     update_cache: yes
     state: latest
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

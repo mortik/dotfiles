@@ -25,19 +25,19 @@ mas_apps:
 vhosts:
   - {
       domain: "rails-app.dev",
-      path: "{{ansible_env.HOME }}/dev/rails",
+      path: "{{ansible_facts['env']['HOME'] }}/dev/rails",
       port: 3000,
       type: rails,
     }
   - {
       domain: "phoenix-app.dev",
-      path: "{{ansible_env.HOME }}/dev/phoenix",
+      path: "{{ansible_facts['env']['HOME'] }}/dev/phoenix",
       port: 4000,
       type: phoenix,
     }
   - {
       domain: "static.dev",
-      path: "{{ansible_env.HOME }}/dev/static",
+      path: "{{ansible_facts['env']['HOME'] }}/dev/static",
       type: static,
     }
 vscode_projects:

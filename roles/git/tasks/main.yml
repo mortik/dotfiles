@@ -3,7 +3,7 @@
   homebrew:
     name: git
     state: latest
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install git
   pacman:
@@ -12,7 +12,7 @@
     update_cache: yes
   become: yes
   become_method: sudo
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - block:
 
@@ -30,12 +30,12 @@
 
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: copy files
   copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/{{ item }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/{{ item }}"
   with_items:
     - .gitignore_global
     - .gitmessage.txt
@@ -43,4 +43,4 @@
 - name: copy gitconfig
   template:
     src: ".gitconfig"
-    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.gitconfig"

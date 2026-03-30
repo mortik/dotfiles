@@ -15,14 +15,14 @@
 
     - name: make sure bashrc.d folder is present
       file:
-        path: "{{ ansible_env.HOME }}/.bashrc.d"
+        path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"
         state: directory
       when: shell == 'bash'
       tags: shell
 
     - name: make sure zshrc.d folder is present
       file:
-        path: "{{ ansible_env.HOME }}/.zshrc.d"
+        path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
         state: directory
       when: shell == 'zsh'
       tags: shell
@@ -30,20 +30,20 @@
     - name: setup bash config
       copy:
         src: "hh.bash"
-        dest: "{{ ansible_env.HOME }}/.bashrc.d/hh.bash"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d/hh.bash"
       when: shell == 'bash'
       tags: shell
 
     - name: setup zsh config
       copy:
         src: "hh.zsh"
-        dest: "{{ ansible_env.HOME }}/.zshrc.d/hh.zsh"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/hh.zsh"
       when: shell == 'zsh'
       tags: shell
 
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
 
 - block:
 
@@ -54,7 +54,7 @@
 
     - name: make sure zshrc.d folder is present
       file:
-        path: "{{ ansible_env.HOME }}/.zshrc.d"
+        path: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d"
         state: directory
       when: shell == 'zsh'
       tags: shell
@@ -62,8 +62,8 @@
     - name: setup zsh config
       copy:
         src: "hh.zsh"
-        dest: "{{ ansible_env.HOME }}/.zshrc.d/hh.zsh"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/hh.zsh"
       when: shell == 'zsh'
       tags: shell
 
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'

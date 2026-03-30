@@ -3,12 +3,12 @@
 
     - name: setup ssh dir
       file:
-        path: "{{ ansible_env.HOME }}/.ssh"
+        path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
         mode: 0700
         state: directory
 
     - name: generate ssh key
-      shell: "ssh-keygen -t ed25519 -f {{ ansible_env.HOME }}/.ssh/{{ ssh_key_name }} -q -N {{ ssh_key_pass }}"
+      shell: "ssh-keygen -t ed25519 -f {{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }} -q -N {{ ssh_key_pass }}"
 
   when:
     - ssh_key_name != ""

@@ -4,14 +4,14 @@
     name: spotify
     state: latest
     accept_external_apps: True
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install spotify
   command: yaourt -S spotify --noconfirm
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: install spotify
   command: snap install spotify
   become: yes
   become_method: sudo
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'

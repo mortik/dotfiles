@@ -9,9 +9,9 @@ ssh_key_pass: ""
 gpg_default_key_id: ""
 editor: "code"
 vhosts:
-  - { domain: "rails-app.dev", path: "{{ansible_env.HOME }}/dev/rails", port: 3000, type: rails }
-  - { domain: "phoenix-app.dev", path: "{{ansible_env.HOME }}/dev/phoenix", port: 4000, type: phoenix }
-  - { domain: "static.dev", path: "{{ansible_env.HOME }}/dev/static", type: static }
+  - { domain: "rails-app.dev", path: "{{ansible_facts['env']['HOME'] }}/dev/rails", port: 3000, type: rails }
+  - { domain: "phoenix-app.dev", path: "{{ansible_facts['env']['HOME'] }}/dev/phoenix", port: 4000, type: phoenix }
+  - { domain: "static.dev", path: "{{ansible_facts['env']['HOME'] }}/dev/static", type: static }
 vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
 vscode_circleci_api_key: ""
