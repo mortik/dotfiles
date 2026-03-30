@@ -8,8 +8,9 @@
 - name: install docker app
   homebrew_cask:
     name: docker
-    state: latest
+    state: present
     accept_external_apps: True
+    sudo_password: "{{ ansible_become_pass | default('') }}"
   when: ansible_facts['os_family'] == 'Darwin'
 
 - name: install docker
