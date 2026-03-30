@@ -13,15 +13,15 @@
         path: "{{ ansible_facts['env']['HOME'] }}/.warp/themes"
         state: directory
 
-    - name: copy warp theme
-      copy:
-        src: "SC-Connie.yaml"
-        dest: "{{ ansible_facts['env']['HOME'] }}/.warp/themes/SC-Connie.yaml"
-
     - name: copy warp theme background
       copy:
         src: "SC-Connie.jpg"
         dest: "{{ ansible_facts['env']['HOME'] }}/.warp/themes/SC-Connie.jpg"
+
+    - name: setup warp theme
+      template:
+        src: "SC-Connie.yaml.j2"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.warp/themes/SC-Connie.yaml"
 
     - name: copy warp keybindings
       copy:
