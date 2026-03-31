@@ -55,4 +55,5 @@
     - { role: forego, tags: forego }
     - { role: kubernetes, tags: kubernetes }
     - { role: warp, tags: warp }
+    - { role: superset, tags: superset }
     - { role: claude-code, tags: claude-code }

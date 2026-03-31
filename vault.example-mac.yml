@@ -85,6 +85,7 @@ cask_apps:
   - sketch
   - slack
   - tableplus
+  - ccmenu
   - warp
   - superset
 

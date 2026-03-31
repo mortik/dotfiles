@@ -1,0 +1,35 @@
+---
+- block:
+
+    - name: create superset config directory
+      file:
+        path: "{{ ansible_facts['env']['HOME'] }}/.superset"
+        state: directory
+
+    - name: copy superset theme
+      copy:
+        src: "one-dark-pro-darker.json"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.superset/one-dark-pro-darker.json"
+
+    - name: apply superset theme to app-state
+      shell: |
+        APP_STATE="{{ ansible_facts['env']['HOME'] }}/.superset/app-state.json"
+        THEME="{{ ansible_facts['env']['HOME'] }}/.superset/one-dark-pro-darker.json"
+        if [ -f "$APP_STATE" ]; then
+          jq --slurpfile theme "$THEME" '
+            .themeState.customThemes = [
+              (.themeState.customThemes // [] | map(select(.id != "one-dark-pro-darker"))[]) ,
+              $theme[0]
+            ] |
+            .themeState.activeThemeId = "one-dark-pro-darker"
+          ' "$APP_STATE" > "${APP_STATE}.tmp" && mv "${APP_STATE}.tmp" "$APP_STATE"
+        else
+          echo '{}' | jq --slurpfile theme "$THEME" '
+            .themeState.customThemes = [$theme[0]] |
+            .themeState.activeThemeId = "one-dark-pro-darker"
+          ' > "$APP_STATE"
+        fi
+      args:
+        executable: /bin/bash
+
+  when: ansible_facts['os_family'] == 'Darwin'
