@@ -1,0 +1,15 @@
+---
+- block:
+
+    - name: install alfred
+      homebrew_cask:
+        name: alfred
+        state: latest
+        accept_external_apps: True
+
+    - name: setup preferences
+      copy:
+        src: prefs.json
+        dest: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Alfred/prefs.json"
+
+  when: ansible_facts['os_family'] == 'Darwin'

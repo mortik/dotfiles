@@ -57,4 +57,7 @@
     - { role: warp, tags: warp }
     - { role: superset, tags: superset }
     - { role: ccmenu, tags: ccmenu }
+    - role: alfred
+      tags: alfred
+      when: ansible_facts['os_family'] == 'Darwin'
     - { role: claude-code, tags: claude-code }
