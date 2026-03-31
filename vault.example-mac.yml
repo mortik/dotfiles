@@ -95,4 +95,3 @@ ccmenu_pipelines:
   - { name: "infrastructure | Deploy", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-deploy.yml/runs?branch=main" }
   - { name: "fleetyards | Release", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/release.yml/runs" }
   - { name: "fleetyards | Vue3", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=chore/vue3" }
-  - { name: "fleetyards | Kamal", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=chore/kamal-deployment" }
