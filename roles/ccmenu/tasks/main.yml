@@ -1,37 +1,41 @@
 ---
 - block:
 
+    - name: set ccmenu plist path
+      set_fact:
+        ccmenu_plist: "{{ ansible_facts['env']['HOME'] }}/Library/Containers/net.sourceforge.cruisecontrol.CCMenu/Data/Library/Preferences/net.sourceforge.cruisecontrol.CCMenu.plist"
+
     - name: set ccmenu hide successful builds
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: HideSuccessfulBuilds
         type: bool
         value: false
 
     - name: set ccmenu open window at launch
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: OpenWindowAtLaunch
         type: bool
         value: true
 
     - name: set ccmenu use symbols for all states
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: UseSymbolsForAllStatesInMenuBar
         type: bool
         value: true
 
     - name: set ccmenu project order
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: ProjectOrder
         type: int
         value: 1
 
     - name: disable ccmenu sounds
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: "{{ item }}"
         type: bool
         value: false
@@ -43,7 +47,7 @@
 
     - name: set ccmenu sound names
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: "{{ item }}"
         type: string
         value: Sosumi
@@ -55,7 +59,7 @@
 
     - name: enable ccmenu notifications
       community.general.osx_defaults:
-        domain: net.sourceforge.cruisecontrol.CCMenu
+        path: "{{ ccmenu_plist }}"
         key: "{{ item }}"
         type: bool
         value: true
@@ -68,7 +72,7 @@
 
     - name: set ccmenu github actions pipelines
       command: >
-        defaults write net.sourceforge.cruisecontrol.CCMenu pipelines -array
+        defaults write {{ ccmenu_plist }} pipelines -array
         {% for pipeline in ccmenu_pipelines %}
         '{ feedName = ""; feedType = github; feedUrl = "{{ pipeline.url }}"; name = "{{ pipeline.name }}"; }'
         {% endfor %}

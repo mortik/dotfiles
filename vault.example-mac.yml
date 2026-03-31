@@ -23,6 +23,7 @@ mas_apps:
   - { id: 409203825, name: "Numbers" }
   - { id: 409201541, name: "Pages" }
   - { id: 409183694, name: "Keynote" }
+  - { id: 603117688, name: "CCMenu" }
 vhosts:
   - {
       domain: "rails-app.dev",
@@ -73,7 +74,6 @@ cask_apps:
   - 1password
   - 1password-cli
   - alfred
-  - ccmenu
   - claude-code
   - colorsnapper
   - flux
@@ -85,7 +85,6 @@ cask_apps:
   - sketch
   - slack
   - tableplus
-  - ccmenu
   - warp
   - superset
 ccmenu_pipelines:
