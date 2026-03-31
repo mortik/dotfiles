@@ -68,10 +68,6 @@ brew_apps:
   - terminal-notifier
   - vips
   - yt-dlp
-  - kubectx
-  - helm
-  - kubernetes-cli
-  - rancher-cli
 brew_start_services: False
 cask_apps:
   - 1password
