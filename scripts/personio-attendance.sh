@@ -13,12 +13,12 @@ set -eu
 # Credentials are read from 1Password:
 #   op://Private/Personio API/client_id
 #   op://Private/Personio API/client_secret
+#   op://Private/Personio API/employee_id
 #
 # Or from environment variables:
-#   PERSONIO_CLIENT_ID, PERSONIO_CLIENT_SECRET
+#   PERSONIO_CLIENT_ID, PERSONIO_CLIENT_SECRET, PERSONIO_EMPLOYEE_ID
 
 PERSONIO_API="https://api.personio.de"
-EMPLOYEE_ID="18057412"
 
 # Working hours config
 START_TIME="09:00"
@@ -39,14 +39,16 @@ error() { echo -e "${RED}[✗]${NC} $1"; exit 1; }
 # --- Credentials ---
 
 get_credentials() {
-  if [ -n "${PERSONIO_CLIENT_ID:-}" ] && [ -n "${PERSONIO_CLIENT_SECRET:-}" ]; then
+  if [ -n "${PERSONIO_CLIENT_ID:-}" ] && [ -n "${PERSONIO_CLIENT_SECRET:-}" ] && [ -n "${PERSONIO_EMPLOYEE_ID:-}" ]; then
     CLIENT_ID="$PERSONIO_CLIENT_ID"
     CLIENT_SECRET="$PERSONIO_CLIENT_SECRET"
+    EMPLOYEE_ID="$PERSONIO_EMPLOYEE_ID"
   elif command -v op &>/dev/null; then
     CLIENT_ID=$(op read "op://Private/Personio API/client_id" 2>/dev/null) || error "Failed to read client_id from 1Password"
     CLIENT_SECRET=$(op read "op://Private/Personio API/client_secret" 2>/dev/null) || error "Failed to read client_secret from 1Password"
+    EMPLOYEE_ID=$(op read "op://Private/Personio API/employee_id" 2>/dev/null) || error "Failed to read employee_id from 1Password"
   else
-    error "No credentials found. Set PERSONIO_CLIENT_ID/PERSONIO_CLIENT_SECRET or install 1Password CLI."
+    error "No credentials found. Set PERSONIO_CLIENT_ID/PERSONIO_CLIENT_SECRET/PERSONIO_EMPLOYEE_ID or install 1Password CLI."
   fi
 }
 
