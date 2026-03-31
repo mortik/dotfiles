@@ -1,0 +1,77 @@
+---
+- block:
+
+    - name: set ccmenu hide successful builds
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: HideSuccessfulBuilds
+        type: bool
+        value: false
+
+    - name: set ccmenu open window at launch
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: OpenWindowAtLaunch
+        type: bool
+        value: true
+
+    - name: set ccmenu use symbols for all states
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: UseSymbolsForAllStatesInMenuBar
+        type: bool
+        value: true
+
+    - name: set ccmenu project order
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: ProjectOrder
+        type: int
+        value: 1
+
+    - name: disable ccmenu sounds
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: "{{ item }}"
+        type: bool
+        value: false
+      loop:
+        - "PlaySound Broken"
+        - "PlaySound Fixed"
+        - "PlaySound StillFailing"
+        - "PlaySound Successful"
+
+    - name: set ccmenu sound names
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: "{{ item }}"
+        type: string
+        value: Sosumi
+      loop:
+        - "Sound Broken"
+        - "Sound Fixed"
+        - "Sound StillFailing"
+        - "Sound Successful"
+
+    - name: enable ccmenu notifications
+      community.general.osx_defaults:
+        domain: net.sourceforge.cruisecontrol.CCMenu
+        key: "{{ item }}"
+        type: bool
+        value: true
+      loop:
+        - "SendNotification Broken"
+        - "SendNotification Fixed"
+        - "SendNotification Starting"
+        - "SendNotification StillFailing"
+        - "SendNotification Successful"
+
+    - name: set ccmenu github actions pipelines
+      command: >
+        defaults write net.sourceforge.cruisecontrol.CCMenu pipelines -array
+        {% for pipeline in ccmenu_pipelines %}
+        '{ feedName = ""; feedType = github; feedUrl = "{{ pipeline.url }}"; name = "{{ pipeline.name }}"; }'
+        {% endfor %}
+      when: ccmenu_pipelines | length > 0
+
+  when: ansible_facts['os_family'] == 'Darwin'

@@ -88,4 +88,11 @@ cask_apps:
   - ccmenu
   - warp
   - superset
-
+ccmenu_pipelines:
+  - { name: "fleetyards | Main", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=main" }
+  - { name: "fobizz-rails | CI", url: "https://api.github.com/repos/101skills-gmbh/fobizz-rails/actions/workflows/ci.yml/runs?branch=main" }
+  - { name: "infrastructure | Test", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-test.yml/runs?branch=main" }
+  - { name: "infrastructure | Deploy", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-deploy.yml/runs?branch=main" }
+  - { name: "fleetyards | Release", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/release.yml/runs" }
+  - { name: "fleetyards | Vue3", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=chore/vue3" }
+  - { name: "fleetyards | Kamal", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=chore/kamal-deployment" }
