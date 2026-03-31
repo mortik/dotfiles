@@ -21,7 +21,8 @@ fi
 brew install ansible
 
 if [ ! -f vault.yml ]; then
-  cp vault.example-mac.yml vault.yml
+  read -p "1Password vault name: " OP_VAULT
+  sed "s/your-vault/${OP_VAULT}/g" vault.example-mac.yml > vault.yml
 fi
 
 echo

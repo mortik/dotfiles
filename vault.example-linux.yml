@@ -3,10 +3,10 @@ hostname: ""
 git_user_name: ""
 git_user_email: ""
 github_user: ""
-github_token: ""
-ssh_key_name: ""
-ssh_key_pass: ""
-gpg_default_key_id: ""
+github_token: "op://your-vault/dotfiles/github-token"
+ssh_key_name: "op://your-vault/dotfiles/ssh-key-name"
+ssh_key_pass: "op://your-vault/dotfiles/ssh-key-pass"
+gpg_default_key_id: "op://your-vault/dotfiles/gpg-default-key-id"
 editor: "code"
 vhosts:
   - { domain: "rails-app.dev", path: "{{ansible_facts['env']['HOME'] }}/dev/rails", port: 3000, type: rails }
@@ -14,4 +14,4 @@ vhosts:
   - { domain: "static.dev", path: "{{ansible_facts['env']['HOME'] }}/dev/static", type: static }
 vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
-vscode_circleci_api_key: ""
+vscode_circleci_api_key: "op://your-vault/dotfiles/vscode-circleci-api-key"

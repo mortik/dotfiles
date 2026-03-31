@@ -18,7 +18,9 @@ fi
 read -s -p "BECOME password: " BECOME_PASS
 echo
 
-ansible-playbook base.yml -i hosts -e @vault.yml -e "ansible_become_pass=${BECOME_PASS}" $tags
+op inject -i vault.yml -o vault.resolved.yml
+ansible-playbook base.yml -i hosts -e @vault.resolved.yml -e "ansible_become_pass=${BECOME_PASS}" $tags
+rm -f vault.resolved.yml
 
 echo
 echo "Provisioning Finished!"

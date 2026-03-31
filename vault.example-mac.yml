@@ -1,18 +1,18 @@
-mas_email: ""
-mas_password: ""
+mas_email: "op://your-vault/dotfiles/mas-email"
+mas_password: "op://your-vault/dotfiles/mas-password"
 user: ""
 hostname: ""
 git_user_name: ""
 git_user_email: ""
 github_user: ""
-github_token: ""
-ssh_key_name: ""
-ssh_key_pass: ""
+github_token: "op://your-vault/dotfiles/github-token"
+ssh_key_name: "op://your-vault/dotfiles/ssh-key-name"
+ssh_key_pass: "op://your-vault/dotfiles/ssh-key-pass"
 bash_cdpath: ".:$HOME:$HOME/dev:$HOME/dev/work"
 zsh_cdpath: ". $HOME $HOME/dev $HOME/work"
 homebrew_path: /opt/homebrew
 shell: zsh
-gpg_default_key_id: ""
+gpg_default_key_id: "op://your-vault/dotfiles/gpg-default-key-id"
 editor: "code"
 personal_mac: true
 wallpaper: construction
@@ -43,7 +43,7 @@ vhosts:
     }
 vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
-vscode_circleci_api_key: ""
+vscode_circleci_api_key: "op://your-vault/dotfiles/vscode-circleci-api-key"
 brew_apps:
   - actionlint
   - age

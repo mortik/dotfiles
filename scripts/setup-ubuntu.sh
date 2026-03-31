@@ -10,7 +10,8 @@ sudo apt update && sudo apt -yq upgrade
 sudo apt -yq install ansible
 
 if [ ! -f vault.yml ]; then
-  cp vault.example-linux.yml vault.yml
+  read -p "1Password vault name: " OP_VAULT
+  sed "s/your-vault/${OP_VAULT}/g" vault.example-linux.yml > vault.yml
 fi
 
 echo
