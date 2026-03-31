@@ -5,7 +5,8 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/Pictures/wallpaper.jpg"
 
 - name: set wallpaper
-  command: "osascript -e 'tell application \"Finder\" to set desktop picture to POSIX file \"{{ ansible_facts['env']['HOME'] }}/Pictures/wallpaper.jpg\"'"
+  command: >
+    osascript -e 'tell application "System Events" to tell every desktop to set picture to "{{ ansible_facts['env']['HOME'] }}/Pictures/wallpaper.jpg"'
   when: ansible_facts['os_family'] == 'Darwin'
 
 - block:
