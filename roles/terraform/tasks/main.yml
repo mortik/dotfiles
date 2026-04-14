@@ -1,7 +1,13 @@
 ---
+- name: add hashicorp tap
+  homebrew_tap:
+    name: hashicorp/tap
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+
 - name: install terraform
   homebrew:
-    name: terraform
+    name: hashicorp/tap/terraform
     state: latest
   when: ansible_facts['os_family'] == 'Darwin'
 
