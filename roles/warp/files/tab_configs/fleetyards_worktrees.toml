@@ -1,0 +1,64 @@
+name = "Worktree: Fleetyards"
+title = "Fleetyards {{name}}"
+color = "blue"
+
+[params.repo]
+type = "repo"
+description = "Repository"
+
+[params.base_branch]
+type = "branch"
+description = "Base branch to branch from"
+default = "main"
+
+[params.branch_name]
+type = "text"
+description = "Branch name"
+default = "my-feature"
+
+[params.name]
+type = "text"
+description = "Title"
+default = "My Feature"
+
+[[panes]]
+id = "root"
+split = "vertical"
+directory = "{{repo}}"
+children = ["top", "claude"]
+
+[[panes]]
+id = "top"
+split = "horizontal"
+directory = "{{repo}}"
+children = ["setup", "terminal"]
+
+[[panes]]
+id = "setup"
+type = "terminal"
+directory = "{{repo}}"
+commands = [
+  "git worktree add -b {{branch_name}} {{repo}}/.worktrees/{{branch_name}} {{base_branch}}",
+  "cd {{repo}}/.worktrees/{{branch_name}}",
+  "./bin/setup"
+]
+
+[[panes]]
+id = "terminal"
+type = "terminal"
+directory = "{{repo}}"
+commands = [
+  "sleep 1",
+  "cd {{repo}}/.worktrees/{{branch_name}}"
+]
+
+[[panes]]
+id = "claude"
+type = "terminal"
+directory = "{{repo}}/.worktrees/{{branch_name}}"
+commands = [
+  "sleep 1",
+  "cd {{repo}}/.worktrees/{{branch_name}}",
+  "claude"
+]
+is_focused = true

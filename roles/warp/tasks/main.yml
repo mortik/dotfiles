@@ -28,6 +28,26 @@
         src: "keybindings.yaml"
         dest: "{{ ansible_facts['env']['HOME'] }}/.warp/keybindings.yaml"
 
+    - name: create warp tab_configs directory
+      file:
+        path: "{{ ansible_facts['env']['HOME'] }}/.warp/tab_configs"
+        state: directory
+
+    - name: copy warp tab configs
+      copy:
+        src: "tab_configs/"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.warp/tab_configs/"
+
+    - name: create warp default_tab_configs directory
+      file:
+        path: "{{ ansible_facts['env']['HOME'] }}/.warp/default_tab_configs"
+        state: directory
+
+    - name: copy warp default tab configs
+      copy:
+        src: "default_tab_configs/"
+        dest: "{{ ansible_facts['env']['HOME'] }}/.warp/default_tab_configs/"
+
     - name: set warp app icon
       community.general.osx_defaults:
         domain: dev.warp.Warp-Stable

@@ -1,0 +1,31 @@
+name = "Fleetyards"
+title = "Fleetyards"
+color = "blue"
+
+[[panes]]
+id = "root"
+split = "vertical"
+children = ["top", "claude"]
+
+[[panes]]
+id = "top"
+split = "horizontal"
+children = ["setup", "terminal"]
+
+[[panes]]
+id = "setup"
+type = "terminal"
+directory = "~/dev/fleetyards/fleetyards"
+commands = ["./bin/setup"]
+
+[[panes]]
+id = "terminal"
+type = "terminal"
+directory = "~/dev/fleetyards/fleetyards"
+
+[[panes]]
+id = "claude"
+type = "terminal"
+directory = "~/dev/fleetyards/fleetyards"
+commands = ["claude"]
+is_focused = true

@@ -1,0 +1,45 @@
+name = "Existing Worktree: Fleetyards"
+title = "Fleetyards {{name}}"
+color = "blue"
+
+[params.repo]
+type = "repo"
+description = "Repository"
+
+[params.branch_name]
+type = "text"
+description = "Branch name"
+default = "my-feature"
+
+[params.name]
+type = "text"
+description = "Title"
+default = "My Feature"
+
+[[panes]]
+id = "root"
+split = "vertical"
+children = ["top", "claude"]
+
+[[panes]]
+id = "top"
+split = "horizontal"
+children = ["setup", "terminal"]
+
+[[panes]]
+id = "setup"
+type = "terminal"
+directory = "{{repo}}/.worktrees/{{branch_name}}"
+commands = ["./bin/setup"]
+
+[[panes]]
+id = "terminal"
+type = "terminal"
+directory = "{{repo}}/.worktrees/{{branch_name}}"
+
+[[panes]]
+id = "claude"
+type = "terminal"
+directory = "{{repo}}/.worktrees/{{branch_name}}"
+commands = ["claude"]
+is_focused = true
