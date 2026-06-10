@@ -8,3 +8,8 @@
   copy:
     src: "settings.json"
     dest: "{{ ansible_facts['env']['HOME'] }}/.claude/settings.json"
+
+- name: setup claude-code global CLAUDE.md
+  copy:
+    src: "CLAUDE.md"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.claude/CLAUDE.md"
