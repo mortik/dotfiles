@@ -9,6 +9,12 @@
   command: "ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
   when: "'brew' not in homebrew_installed.stdout"
 
+- name: Add Homebrew Taps
+  homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ brew_taps | default([]) }}"
+
 - name: Install Homebrew Apps
   homebrew:
     name: "{{ brew_apps }}"

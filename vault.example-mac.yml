@@ -45,13 +45,19 @@ vhosts:
 vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
 vscode_circleci_api_key: "op://your-vault/dotfiles/vscode-circleci-api-key"
+brew_taps:
+  - felixkratz/formulae
+  - pulumi/tap
+  - puma/puma
 brew_apps:
+  - acme.sh
   - actionlint
   - age
   - awscli
   - crowdin
   - dotnet
   - elixir
+  - felixkratz/formulae/sketchybar
   - ffmpeg
   - flyctl
   - gh
@@ -65,6 +71,9 @@ brew_apps:
   - lazygit
   - mas
   - mise
+  - oasdiff
+  - puma/puma/puma-dev
+  - pulumi/tap/pulumi
   - s3cmd
   - terminal-notifier
   - vips
@@ -84,13 +93,16 @@ cask_apps:
   - postman
   - sketch
   - slack
-  - tableplus
-  - warp
+  - supacode
   - superset
+  - tableplus
+  - temurin
+  - warp
 ccmenu_pipelines:
   - { name: "fleetyards | Main", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=main" }
-  - { name: "fobizz-rails | CI", url: "https://api.github.com/repos/101skills-gmbh/fobizz-rails/actions/workflows/ci.yml/runs?branch=main" }
-  - { name: "infrastructure | Test", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-test.yml/runs?branch=main" }
-  - { name: "infrastructure | Deploy", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-deploy.yml/runs?branch=main" }
   - { name: "fleetyards | Release", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/release.yml/runs" }
-  - { name: "fleetyards | Vue3", url: "https://api.github.com/repos/fleetyards/fleetyards/actions/workflows/main.yml/runs?branch=chore/vue3" }
+  - { name: "fleetyards infrastructure | Main", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/main.yml/runs?branch=main" }
+  - { name: "fleetyards infrastructure | Deploy", url: "https://api.github.com/repos/fleetyards/infrastructure/actions/workflows/terraform-deploy.yml/runs?branch=main" }
+  - { name: "fleetyards sync | Main", url: "https://api.github.com/repos/fleetyards/sync/actions/workflows/main.yml/runs?branch=main" }
+  - { name: "fleetyards sync | Release", url: "https://api.github.com/repos/fleetyards/sync/actions/workflows/release.yml/runs" }
+  - { name: "fobizz-rails | CI", url: "https://api.github.com/repos/101skills-gmbh/fobizz-rails/actions/workflows/ci.yml/runs?branch=main" }
