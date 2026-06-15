@@ -7,6 +7,12 @@
         state: latest
         accept_external_apps: True
 
+    - name: ensure alfred preferences directory exists
+      file:
+        path: "{{ ansible_facts['env']['HOME'] }}/Library/Application Support/Alfred"
+        state: directory
+        mode: '0755'
+
     - name: setup preferences
       copy:
         src: prefs.json

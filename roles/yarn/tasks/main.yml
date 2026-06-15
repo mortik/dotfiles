@@ -16,21 +16,38 @@
 
 - block:
 
-    - name: add yarn apt key
-      apt_key:
-        url: https://dl.yarnpkg.com/debian/pubkey.gpg
-        state: present
+    - name: ensure apt keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
 
-    - name: copy sourceslist
-      copy:
-        src: yarnsources.list
-        dest: /etc/apt/sources.list.d/yarnsources.list
+    - name: fetch yarn signing key
+      get_url:
+        url: https://dl.yarnpkg.com/debian/pubkey.gpg
+        dest: /etc/apt/keyrings/yarn.asc
+        mode: '0644'
+
+    - name: remove legacy yarn sourceslist
+      file:
+        path: /etc/apt/sources.list.d/yarnsources.list
+        state: absent
+
+    - name: add yarn apt repository
+      deb822_repository:
+        name: yarn
+        types: deb
+        uris: https://dl.yarnpkg.com/debian/
+        suites: stable
+        components: main
+        signed_by: /etc/apt/keyrings/yarn.asc
+        state: present
 
     - name: install yarn
       apt:
         name: yarn
         state: present
-        update-cache: yes
+        update_cache: yes
 
   become: yes
   become_method: sudo

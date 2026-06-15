@@ -44,11 +44,27 @@
 
 - block:
 
+    - name: ensure apt keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: fetch snwh pulp PPA signing key
+      get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x023634F5E3DE42B7594EB77B9528DA3D98902E4B"
+        dest: /etc/apt/keyrings/snwh-pulp.asc
+        mode: '0644'
+
     - name: add icon set ppa
-      apt_repository:
-        repo: ppa:snwh/pulp
+      deb822_repository:
+        name: snwh-pulp
+        types: deb
+        uris: https://ppa.launchpadcontent.net/snwh/pulp/ubuntu
+        suites: "{{ ansible_distribution_release }}"
+        components: main
+        signed_by: /etc/apt/keyrings/snwh-pulp.asc
         state: present
-        update_cache: yes
 
     - name: install icon set
       apt:

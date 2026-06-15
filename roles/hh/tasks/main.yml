@@ -1,11 +1,27 @@
 ---
 - block:
 
+    - name: ensure apt keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: fetch ultradvorka PPA signing key
+      get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x1966720467792BF00772E4A8A78C95E7CDE35065"
+        dest: /etc/apt/keyrings/ultradvorka.asc
+        mode: '0644'
+
     - name: add hh repo
-      apt_repository:
-        repo: ppa:ultradvorka/ppa
+      deb822_repository:
+        name: ultradvorka
+        types: deb
+        uris: https://ppa.launchpadcontent.net/ultradvorka/ppa/ubuntu
+        suites: "{{ ansible_distribution_release }}"
+        components: main
+        signed_by: /etc/apt/keyrings/ultradvorka.asc
         state: present
-        update_cache: yes
 
     - name: install hh
       apt:

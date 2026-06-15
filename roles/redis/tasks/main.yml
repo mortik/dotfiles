@@ -16,11 +16,29 @@
 
 - block:
 
+    - name: ensure apt keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+      tags: redis
+
+    - name: fetch chris-lea redis-server PPA signing key
+      get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xBC4792686766234A4988464C6E8E7D925DD2FC19"
+        dest: /etc/apt/keyrings/chris-lea-redis.asc
+        mode: '0644'
+      tags: redis
+
     - name: add redis ppa
-      apt_repository:
-        repo: 'ppa:chris-lea/redis-server'
+      deb822_repository:
+        name: chris-lea-redis
+        types: deb
+        uris: https://ppa.launchpadcontent.net/chris-lea/redis-server/ubuntu
+        suites: "{{ ansible_distribution_release }}"
+        components: main
+        signed_by: /etc/apt/keyrings/chris-lea-redis.asc
         state: present
-        update_cache: yes
       tags: redis
 
     - name: install redis

@@ -16,11 +16,27 @@
 
 - block:
 
+    - name: ensure apt keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: fetch git-core PPA signing key
+      get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF911AB184317630C59970973E363C90F8F1B6217"
+        dest: /etc/apt/keyrings/git-core.asc
+        mode: '0644'
+
     - name: add git ppa
-      apt_repository:
-        repo: ppa:git-core/ppa
+      deb822_repository:
+        name: git-core
+        types: deb
+        uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
+        suites: "{{ ansible_distribution_release }}"
+        components: main
+        signed_by: /etc/apt/keyrings/git-core.asc
         state: present
-        update_cache: yes
 
     - name: install git
       apt:
