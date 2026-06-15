@@ -23,7 +23,7 @@
         dest: "/usr/local/etc/nginx/servers/{{ item.domain }}"
       vars:
         domain: "{{ item.domain }}"
-        path: "{{ item.path }}"
+        path: "{{ item.path | expanduser }}"
         port: "{{ item.port }}"
       with_items: "{{ vhosts }}"
       notify:
@@ -59,7 +59,7 @@
         dest: "/etc/nginx/servers/{{ item.domain }}"
       vars:
         domain: "{{ item.domain }}"
-        path: "{{ item.path }}"
+        path: "{{ item.path | expanduser }}"
         port: "{{ item.port }}"
       with_items: "{{ vhosts }}"
       become: yes
@@ -97,7 +97,7 @@
         dest: "/etc/nginx/sites-available/{{ item.domain }}"
       vars:
         domain: "{{ item.domain }}"
-        path: "{{ item.path }}"
+        path: "{{ item.path | expanduser }}"
         port: "{{ item.port }}"
       with_items: "{{ vhosts }}"
       become: yes
