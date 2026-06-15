@@ -52,6 +52,26 @@
     src: gpg-agent.conf
     dest: "{{ ansible_facts['env']['HOME'] }}/.gnupg/gpg-agent.conf"
 
+- name: check if gpg secret key already imported
+  command: "gpg --list-secret-keys {{ gpg_default_key_id }}"
+  register: gpg_key_check
+  changed_when: false
+  failed_when: false
+  when:
+    - gpg_secret_key is defined
+    - gpg_default_key_id is defined
+
+- name: import gpg secret key
+  shell:
+    cmd: gpg --batch --import
+    stdin: "{{ gpg_secret_key | b64decode }}"
+  no_log: true
+  when:
+    - gpg_secret_key is defined
+    - (gpg_secret_key | string | length) > 0
+    - gpg_default_key_id is defined
+    - gpg_key_check.rc != 0
+
 - name: make sure bashrc.d folder is present
   file:
     path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.d"

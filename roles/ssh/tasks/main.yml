@@ -1,15 +1,27 @@
 ---
-- block:
+- name: setup ssh dir
+  file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
+    mode: '0700'
+    state: directory
 
-    - name: setup ssh dir
-      file:
-        path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
-        mode: 0700
-        state: directory
-
-    - name: generate ssh key
-      shell: "ssh-keygen -t ed25519 -f {{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }} -q -N {{ ssh_key_pass }}"
-
+- name: install ssh private key
+  copy:
+    content: "{{ ssh_private_key | b64decode }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }}"
+    mode: '0600'
+  no_log: true
   when:
-    - ssh_key_name != ""
-    - ssh_key_pass != ""
+    - ssh_key_name is defined and ssh_key_name != ""
+    - ssh_private_key is defined
+    - (ssh_private_key | string | length) > 0
+
+- name: install ssh public key
+  copy:
+    content: "{{ ssh_public_key }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }}.pub"
+    mode: '0644'
+  when:
+    - ssh_key_name is defined and ssh_key_name != ""
+    - ssh_public_key is defined
+    - (ssh_public_key | string | length) > 0
