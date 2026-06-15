@@ -27,6 +27,14 @@ export ZSH_DISABLE_COMPFIX=true
 export ZPLUG_HOME={{ homebrew_path }}/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
+# Multi-user Homebrew makes /opt/homebrew/Cellar admin-group-writable, which
+# zsh treats as insecure. Wrap compinit so every caller (zplug, oh-my-zsh,
+# our own) loads completions anyway. Must run AFTER zplug's init.zsh, which
+# autoloads compinit and would clobber the wrapper.
+autoload -Uz +X compinit
+functions[_orig_compinit]="$functions[compinit]"
+compinit() { _orig_compinit -u "$@" }
+
 # zplug "lib/*", from:oh-my-zsh currently not possible due to issues in vcs_info lib
 zplug "lib/bzr", from:oh-my-zsh
 zplug "lib/completion", from:oh-my-zsh
