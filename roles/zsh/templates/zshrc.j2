@@ -23,6 +23,7 @@ export PGGSSENCMODE="disable" # temporary fix for postgresql 14.8 and pg gem
 
 export DOTNET_ROOT="{{ homebrew_path }}/opt/dotnet/libexec"
 
+export ZSH_DISABLE_COMPFIX=true
 export ZPLUG_HOME={{ homebrew_path }}/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
@@ -66,7 +67,7 @@ else
   export EDITOR='{{ editor }}'
 fi
 
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -u
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
