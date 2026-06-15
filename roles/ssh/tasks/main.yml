@@ -5,23 +5,13 @@
     mode: '0700'
     state: directory
 
-- name: install ssh private key
-  copy:
-    content: "{{ ssh_private_key | b64decode }}"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }}"
+- name: configure 1password ssh agent
+  blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.ssh/config"
+    create: true
     mode: '0600'
-  no_log: true
-  when:
-    - ssh_key_name is defined and ssh_key_name != ""
-    - ssh_private_key is defined
-    - (ssh_private_key | string | length) > 0
-
-- name: install ssh public key
-  copy:
-    content: "{{ ssh_public_key }}"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.ssh/{{ ssh_key_name }}.pub"
-    mode: '0644'
-  when:
-    - ssh_key_name is defined and ssh_key_name != ""
-    - ssh_public_key is defined
-    - (ssh_public_key | string | length) > 0
+    marker: "# {mark} ANSIBLE MANAGED 1PASSWORD SSH AGENT"
+    block: |
+      Host *
+        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  when: ansible_facts['os_family'] == 'Darwin'
