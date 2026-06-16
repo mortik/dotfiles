@@ -45,9 +45,7 @@ vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
 vscode_circleci_api_key: "op://your-vault/dotfiles/vscode-circleci-api-key"
 brew_taps:
-  - felixkratz/formulae
-  - pulumi/tap
-  - puma/puma
+  - hashicorp/tap
 brew_apps:
   - acme.sh
   - actionlint
@@ -56,7 +54,6 @@ brew_apps:
   - crowdin
   - dotnet
   - elixir
-  - felixkratz/formulae/sketchybar
   - ffmpeg
   - flyctl
   - gh
@@ -71,10 +68,9 @@ brew_apps:
   - mas
   - mise
   - oasdiff
-  - puma/puma/puma-dev
-  - pulumi/tap/pulumi
   - s3cmd
   - terminal-notifier
+  - terraform
   - vips
   - wallpaper
   - yt-dlp
