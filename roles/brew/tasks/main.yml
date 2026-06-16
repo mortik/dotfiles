@@ -9,11 +9,36 @@
   command: "ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\""
   when: "'brew' not in homebrew_installed.stdout"
 
+# Shared multi-user setup: chgrp admin + g+rwX + setgid on dirs so either
+# admin account can install/update without leaving files the other can't touch.
+- name: Ensure shared Homebrew permissions
+  when: ansible_facts['os_family'] == 'Darwin'
+  become: yes
+  become_method: sudo
+  block:
+    - name: chgrp -R admin {{ homebrew_path }}
+      command: "chgrp -R admin {{ homebrew_path }}"
+      changed_when: false
+
+    - name: chmod -R g+rwX {{ homebrew_path }}
+      command: "chmod -R g+rwX {{ homebrew_path }}"
+      changed_when: false
+
+    - name: setgid on directories under {{ homebrew_path }}
+      command: "find {{ homebrew_path }} -type d ! -perm -g+s -exec chmod g+s {} +"
+      changed_when: false
+
 - name: Add Homebrew Taps
   homebrew_tap:
     name: "{{ item }}"
     state: present
   loop: "{{ brew_taps | default([]) }}"
+
+# Stops "the following taps are not trusted" warnings on every brew update.
+- name: Trust Homebrew Taps
+  command: "brew trust --tap {{ item }}"
+  loop: "{{ brew_taps | default([]) }}"
+  changed_when: false
 
 - name: Install Homebrew Apps
   homebrew:

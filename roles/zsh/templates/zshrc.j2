@@ -2,6 +2,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Group-writable by default so files this account creates under shared
+# locations (e.g. /opt/homebrew) stay editable by other admin users.
+umask 002
+
 cdpath=({{ zsh_cdpath }})
 
 # Modify PATH

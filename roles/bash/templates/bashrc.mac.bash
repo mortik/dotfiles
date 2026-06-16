@@ -1,4 +1,8 @@
 #!/bin/bash
+# Group-writable by default so files this account creates under shared
+# locations (e.g. /opt/homebrew) stay editable by other admin users.
+umask 002
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
