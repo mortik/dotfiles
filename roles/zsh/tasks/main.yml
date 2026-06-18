@@ -58,3 +58,27 @@
     src: "personal.zsh"
     dest: "{{ ansible_facts['env']['HOME'] }}/.zshrc.d/personal.zsh"
   when: personal_mac | default(false)
+
+# mise lives only in .zshrc (interactive shells). Non-interactive shells —
+# notably the `zsh -l <script>` that GUI apps like Supacode use to run dev
+# commands — never source .zshrc, so they fall back to system ruby and fail
+# with "can't find gem foreman". Put mise shims on PATH for those shells too.
+- name: ensure mise shims on PATH for non-login non-interactive shells (.zshenv)
+  blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.zshenv"
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - mise shims"
+    block: |
+      export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+# On macOS, /etc/zprofile runs path_helper AFTER .zshenv, which re-prioritises
+# system dirs (/usr/bin etc.) ahead of anything .zshenv prepended. .zprofile
+# runs after path_helper, so re-assert mise shims here — this is what actually
+# fixes non-interactive *login* shells (the Supacode case).
+- name: ensure mise shims on PATH for non-interactive login shells (.zprofile, post path_helper)
+  blockinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.zprofile"
+    create: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - mise shims"
+    block: |
+      export PATH="$HOME/.local/share/mise/shims:$PATH"
