@@ -29,6 +29,9 @@ export DOTNET_ROOT="{{ homebrew_path }}/opt/dotnet/libexec"
 
 export ZSH_DISABLE_COMPFIX=true
 export ZPLUG_HOME={{ homebrew_path }}/opt/zplug
+# Per-user cache dir; the default ($ZPLUG_HOME/cache) is shared across accounts
+# in the Homebrew Cellar and another user owns the files unwritably.
+export ZPLUG_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zplug"
 source $ZPLUG_HOME/init.zsh
 
 # Multi-user Homebrew makes /opt/homebrew/Cellar admin-group-writable, which
