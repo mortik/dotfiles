@@ -81,3 +81,13 @@
 {% endfor %}
 [init]
   defaultBranch = main
+{% if homebrew_path is defined %}
+{# Shared multi-user Homebrew: the tree is owned by whichever admin installed
+   it, so git's dubious-ownership check blocks 'brew update' for the other user.
+   Trust the prefix and every tap repo for both accounts. #}
+[safe]
+  directory = {{ homebrew_path }}
+{% for tap in brew_taps | default([]) %}
+  directory = {{ homebrew_path }}/Library/Taps/{{ tap.split('/')[0] }}/homebrew-{{ tap.split('/')[1] }}
+{% endfor %}
+{% endif %}
