@@ -6,7 +6,18 @@ alias ..='cd ..'
 
 alias go-run='go run !(*_test).go'
 
-alias update='brew update --preinstall && brew upgrade && brew cleanup'
+# Self-healing on a shared multi-user Homebrew: if cleanup trips over kegs the
+# other admin installed without group-write, repair perms once and retry.
+update() {
+  brew update --preinstall && brew upgrade || return
+  brew cleanup && return
+  echo "brew cleanup failed — repairing shared Homebrew permissions…"
+  local prefix; prefix="$(brew --prefix)"
+  sudo chgrp -R admin "$prefix" \
+    && sudo chmod -R g+rwX "$prefix" \
+    && sudo find "$prefix" -type d ! -perm -g+s -exec chmod g+s {} + \
+    && brew cleanup
+}
 
 alias remove-all-gems='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 
