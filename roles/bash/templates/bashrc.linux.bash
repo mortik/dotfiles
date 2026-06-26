@@ -21,9 +21,7 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 
 # Modify PATH
-export PATH=./node_modules/.bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
-export PATH=./bin:$PATH
 
 # Set editor
 export EDITOR={{ editor }}
