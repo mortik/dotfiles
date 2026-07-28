@@ -44,8 +44,12 @@ vhosts:
 vscode_projects:
   - { name: ".dotfiles", path: "$home/.dotfiles" }
 vscode_circleci_api_key: "op://your-vault/dotfiles/vscode-circleci-api-key"
+puma_dev_apps:
+  - { name: "rails-app", port: 3000 }
+  - { name: "phoenix-app", port: 4000 }
 brew_taps:
   - hashicorp/tap
+  - puma/puma
 brew_apps:
   - acme.sh
   - actionlint
@@ -68,6 +72,7 @@ brew_apps:
   - mas
   - mise
   - oasdiff
+  - puma/puma/puma-dev
   - s3cmd
   - terminal-notifier
   - terraform
