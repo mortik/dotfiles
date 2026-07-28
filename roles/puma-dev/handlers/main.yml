@@ -1,0 +1,5 @@
+---
+- name: reload puma-dev
+  shell: |
+    launchctl unload {{ ansible_env.HOME }}/Library/LaunchAgents/io.puma.dev.plist 2>/dev/null || true
+    launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/io.puma.dev.plist

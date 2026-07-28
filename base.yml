@@ -44,6 +44,9 @@
     # - { role: nginx, tags: nginx }
     - { role: postgres, tags: postgres }
     - { role: redis, tags: redis }
+    - role: puma-dev
+      tags: puma-dev
+      when: ansible_facts['os_family'] == 'Darwin'
     # - { role: wkhtmltopdf, tags: wkhtmltopdf }
     - { role: terraform, tags: terraform }
     - { role: docker, tags: docker }

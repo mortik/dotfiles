@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+   <key>Label</key>
+   <string>io.puma.dev</string>
+   <key>ProgramArguments</key>
+   <array>
+     <string>{{ homebrew_path }}/bin/puma-dev</string>
+     <string>-launchd</string>
+     <string>-dir</string>
+     <string>{{ puma_dev_dir }}</string>
+     <string>-d</string>
+     <string>{{ puma_dev_domain }}</string>
+     <string>-timeout</string>
+     <string>{{ puma_dev_timeout }}</string>
+     <string>-no-serve-public-paths</string>
+     <string></string>
+   </array>
+   <key>KeepAlive</key>
+   <true/>
+   <key>RunAtLoad</key>
+   <true/>
+   <key>Sockets</key>
+   <dict>
+       <key>Socket</key>
+       <dict>
+           <key>SockNodeName</key>
+           <string>0.0.0.0</string>
+           <key>SockServiceName</key>
+           <string>80</string>
+       </dict>
+       <key>SocketTLS</key>
+       <dict>
+           <key>SockNodeName</key>
+           <string>0.0.0.0</string>
+           <key>SockServiceName</key>
+           <string>443</string>
+       </dict>
+   </dict>
+   <key>StandardOutPath</key>
+   <string>{{ ansible_env.HOME }}/Library/Logs/puma-dev.log</string>
+   <key>StandardErrorPath</key>
+   <string>{{ ansible_env.HOME }}/Library/Logs/puma-dev.log</string>
+</dict>
+</plist>
