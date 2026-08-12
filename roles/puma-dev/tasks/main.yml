@@ -11,16 +11,36 @@
         name: puma/puma/puma-dev
         state: present
 
-    - name: setup puma-dev resolver
+    - name: create /etc/resolver directory
       command: "{{ homebrew_path }}/bin/puma-dev -setup"
       args:
-        creates: "/etc/resolver/{{ puma_dev_domain }}"
+        creates: /etc/resolver
+      become: yes
+      become_method: sudo
+
+    # -setup leaves /etc/resolver owned by the invoking user because the puma-dev
+    # agent rewrites this file on every start. It must stay user-owned, or the
+    # agent hits "permission denied" and launchd crash-loops it.
+    - name: point {{ puma_dev_domain }} domain at puma-dev DNS
+      copy:
+        content: |
+          nameserver 127.0.0.1
+          port {{ puma_dev_dns_port }}
+        dest: "/etc/resolver/{{ puma_dev_domain }}"
+        owner: "{{ ansible_env.USER }}"
+        mode: "0644"
       become: yes
       become_method: sudo
 
     - name: ensure puma-dev app directory exists
       file:
         path: "{{ puma_dev_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: ensure LaunchAgents directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/Library/LaunchAgents"
         state: directory
         mode: "0755"
 
