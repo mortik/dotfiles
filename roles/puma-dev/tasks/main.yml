@@ -11,24 +11,15 @@
         name: puma/puma/puma-dev
         state: present
 
+    # Creates the /etc/resolver directory, user-owned. The per-domain entry
+    # inside it is written by the agent on every start, so it is deliberately
+    # not managed here: a file placed by root under /private/etc inherits the
+    # SIP restricted flag, and the agent then crash-loops on "permission
+    # denied" trying to rewrite it.
     - name: create /etc/resolver directory
       command: "{{ homebrew_path }}/bin/puma-dev -setup"
       args:
         creates: /etc/resolver
-      become: yes
-      become_method: sudo
-
-    # -setup leaves /etc/resolver owned by the invoking user because the puma-dev
-    # agent rewrites this file on every start. It must stay user-owned, or the
-    # agent hits "permission denied" and launchd crash-loops it.
-    - name: point {{ puma_dev_domain }} domain at puma-dev DNS
-      copy:
-        content: |
-          nameserver 127.0.0.1
-          port {{ puma_dev_dns_port }}
-        dest: "/etc/resolver/{{ puma_dev_domain }}"
-        owner: "{{ ansible_facts['env'].USER }}"
-        mode: "0644"
       become: yes
       become_method: sudo
 
