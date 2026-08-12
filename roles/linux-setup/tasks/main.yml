@@ -61,7 +61,7 @@
         name: snwh-pulp
         types: deb
         uris: https://ppa.launchpadcontent.net/snwh/pulp/ubuntu
-        suites: "{{ ansible_distribution_release }}"
+        suites: "{{ ansible_facts['distribution_release'] }}"
         components: main
         signed_by: /etc/apt/keyrings/snwh-pulp.asc
         state: present

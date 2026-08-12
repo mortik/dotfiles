@@ -33,7 +33,7 @@
         name: git-core
         types: deb
         uris: https://ppa.launchpadcontent.net/git-core/ppa/ubuntu
-        suites: "{{ ansible_distribution_release }}"
+        suites: "{{ ansible_facts['distribution_release'] }}"
         components: main
         signed_by: /etc/apt/keyrings/git-core.asc
         state: present

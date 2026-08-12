@@ -39,8 +39,8 @@
        </dict>
    </dict>
    <key>StandardOutPath</key>
-   <string>{{ ansible_env.HOME }}/Library/Logs/puma-dev.log</string>
+   <string>{{ ansible_facts['env'].HOME }}/Library/Logs/puma-dev.log</string>
    <key>StandardErrorPath</key>
-   <string>{{ ansible_env.HOME }}/Library/Logs/puma-dev.log</string>
+   <string>{{ ansible_facts['env'].HOME }}/Library/Logs/puma-dev.log</string>
 </dict>
 </plist>

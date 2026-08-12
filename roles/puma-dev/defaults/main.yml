@@ -2,5 +2,5 @@
 puma_dev_domain: test
 puma_dev_timeout: 15m0s
 puma_dev_dns_port: 9253
-puma_dev_dir: "{{ ansible_env.HOME }}/.puma-dev"
+puma_dev_dir: "{{ ansible_facts['env'].HOME }}/.puma-dev"
 puma_dev_apps: []

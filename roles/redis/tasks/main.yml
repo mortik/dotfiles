@@ -35,7 +35,7 @@
         name: chris-lea-redis
         types: deb
         uris: https://ppa.launchpadcontent.net/chris-lea/redis-server/ubuntu
-        suites: "{{ ansible_distribution_release }}"
+        suites: "{{ ansible_facts['distribution_release'] }}"
         components: main
         signed_by: /etc/apt/keyrings/chris-lea-redis.asc
         state: present

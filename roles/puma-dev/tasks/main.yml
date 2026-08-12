@@ -27,7 +27,7 @@
           nameserver 127.0.0.1
           port {{ puma_dev_dns_port }}
         dest: "/etc/resolver/{{ puma_dev_domain }}"
-        owner: "{{ ansible_env.USER }}"
+        owner: "{{ ansible_facts['env'].USER }}"
         mode: "0644"
       become: yes
       become_method: sudo
@@ -40,14 +40,14 @@
 
     - name: ensure LaunchAgents directory exists
       file:
-        path: "{{ ansible_env.HOME }}/Library/LaunchAgents"
+        path: "{{ ansible_facts['env'].HOME }}/Library/LaunchAgents"
         state: directory
         mode: "0755"
 
     - name: install puma-dev launchd agent
       template:
         src: io.puma.dev.plist.j2
-        dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/io.puma.dev.plist"
+        dest: "{{ ansible_facts['env'].HOME }}/Library/LaunchAgents/io.puma.dev.plist"
         mode: "0644"
       notify:
         - reload puma-dev
